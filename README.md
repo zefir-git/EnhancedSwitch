@@ -57,3 +57,109 @@ const result = new EnhancedSwitch(value)
     .default(() => "default").value;
 ```
 </details>
+
+# Documentation
+
+<details open>
+<summary>Table of Contents</summary>
+
+- [Class `EnhancedSwitch<T, U>`](#enhancedswitcht-u)
+  - [`new EnhancedSwitch(expression: T)`](#new-enhancedswitchexpression-t)
+  - [`enhancedSwitch.case(valueN: T | T[], code: U)`](#enhancedswitchcasevaluen-t--t-code-u)
+  - [`enhancedSwitch.case(valueN: T | T[], code: (s: EnhancedSwitch<T, U>) => U | void)`](#enhancedswitchcasevaluen-t--t-code-s-enhancedswitcht-u--u--void)
+  - [`enhancedSwitch.default(code: U)`](#enhancedswitchdefaultcode-u)
+  - [`enhancedSwitch.default(code: (s: EnhancedSwitch<T, U>) => U | void)`](#enhancedswitchdefaultcode-s-enhancedswitcht-u--u--void)
+  - [`enhancedSwitch.default(code: U, returnvalueN: true)`](#enhancedswitchdefaultcode-u-returnvalue-true)
+  - [`enhancedSwitch.default(code: (s: EnhancedSwitch<T, U>) => U | void, returnvalueN: true)`](#enhancedswitchdefaultcode-s-enhancedswitcht-u--u--void-returnvalue-true)
+  - [`enhancedSwitch.value`](#enhancedswitchvalue)
+
+## Class `EnhancedSwitch<T, U>`
+
+The EnhancedSwitch evaluates an expression, matching the expression's value against a series of `case` clauses, and executes the statements after the first `case` clause with a matching value. The `default` clause of an EnhancedSwitch will be jumped to if no case matches the expression's value.
+
+| Template parameters | Description            |
+|---------------------|------------------------|
+| `T`                 | Switch expression type |
+| `U`                 | Switch return type     |
+
+### `new EnhancedSwitch(expression: T)`
+
+Create a new EnhancedSwitch
+
+| Parameter    | Type | Description                                                       |
+|--------------|------|-------------------------------------------------------------------|
+| `expression` | `T`  | An expression whose result is matched against each `case` clause. |
+
+### `enhancedSwitch.case(valueN: T | T[], code: U)`
+
+A `case` clause used to match against `expression`. If the `expression` matches the specified `valueN` (which can be any expression), this case clause is executed.
+
+| Parameter | Type | Description                                                                                                    |
+|-----------|------|----------------------------------------------------------------------------------------------------------------|
+| `valueN`  | `T`  | The `case` clause is executed if the expression matches this value, or at least one value if this is an array. |
+| `code`    | `U`  | The value to return if the case matches.                                                                       |
+
+Returns: `this` ([`EnhancedSwitch<T, U>`](#enhancedswitcht-u))
+
+### `enhancedSwitch.case(valueN: T | T[], code: (s: EnhancedSwitch<T, U>) => U | void)`
+
+A `case` clause used to match against `expression`. If the `expression` matches the specified `valueN` (which can be any expression), this case clause is executed.
+
+| Parameter | Type                                     | Description                                                                                                    |
+|-----------|------------------------------------------|----------------------------------------------------------------------------------------------------------------|
+| `valueN`  | `T`                                      | The `case` clause is executed if the expression matches this value, or at least one value if this is an array. |
+| `code`    | `(s: EnhancedSwitch<T, U>) => U \| void` | The function to run if the case matches.                                                                       |
+
+Returns: `this` ([`EnhancedSwitch<T, U>`](#enhancedswitcht-u))
+
+### `enhancedSwitch.default(code: U)`
+
+A `default` clause; if provided, this clause is executed if the value of `expression` does not match any of the `case` clauses. An EnhancedSwitch can only have one `default` clause.
+
+| Parameter | Type | Description                             |
+|-----------|------|-----------------------------------------|
+| `code`    | `U`  | The value to return if no case matches. |
+
+Returns: `this` ([`EnhancedSwitch<T, U>`](#enhancedswitcht-u))
+
+### `enhancedSwitch.default(code: (s: EnhancedSwitch<T, U>) => U | void)`
+
+A `default` clause; if provided, this clause is executed if the value of `expression` does not match any of the `case` clauses. An EnhancedSwitch can only have one `default` clause.
+
+| Parameter | Type                                     | Description                              |
+|-----------|------------------------------------------|------------------------------------------|
+| `code`    | `(s: EnhancedSwitch<T, U>) => U \| void` | The function to run if no case matches.  |
+
+Returns: `this` ([`EnhancedSwitch<T, U>`](#enhancedswitcht-u))
+
+### `enhancedSwitch.default(code: U, returnvalueN: true)`
+
+A `default` clause; if provided, this clause is executed if the value of `expression` does not match any of the `case` clauses. An EnhancedSwitch can only have one `default` clause.
+
+| Parameter      | Type   | Description                                                             |
+|----------------|--------|-------------------------------------------------------------------------|
+| `code`         | `U`    | The value to return if no case matches.                                 |
+| `returnvalueN` | `true` | If true, the provided value is returned instead of the switch instance. |
+
+Returns: `U`
+
+### `enhancedSwitch.default(code: (s: EnhancedSwitch<T, U>) => U | void, returnvalueN: true)`
+
+A `default` clause; if provided, this clause is executed if the value of `expression` does not match any of the `case` clauses. An EnhancedSwitch can only have one `default` clause.
+
+| Parameter      | Type                                     | Description                                                             |
+|----------------|------------------------------------------|-------------------------------------------------------------------------|
+| `code`         | `(s: EnhancedSwitch<T, U>) => U \| void` | The function to run if no case matches.                                 |
+| `returnvalueN` | `true`                                   | If true, the provided value is returned instead of the switch instance. |
+
+Returns: `U`
+
+### `enhancedSwitch.value`
+
+The result of the switch statement.
+
+| Throws                                                                                                    | When                                                                                                                                     |
+|-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) | If the switch statement has no result, e.g. there is no `default` clause and no `case` clause matches the expression or returns a value. |
+
+Type: `U`
