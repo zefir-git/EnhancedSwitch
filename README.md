@@ -7,7 +7,7 @@
 
 An enhanced switch, similar to Java.
 
-This library targets Node.js 18 and 20, but can also work in the browser.
+This library targets Node.js 16, 18 and 20, but can also work in the browser.
 
 ## Installation
 ```sh
