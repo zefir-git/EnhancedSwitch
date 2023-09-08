@@ -1,0 +1,36 @@
+{
+  "name": "enhanced-switch",
+  "version": "0.0.0-dev",
+  "description": "An enhanced switch, similar to Java",
+  "main": "src/EnhancedSwitch.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha",
+    "test:coverage": "c8 npm test",
+    "test:coverage:html": "c8 --reporter=html npm test",
+    "build": "tsc",
+    "prepack": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zefir-git/EnhancedSwitch.git"
+  },
+  "keywords": [
+    "switch",
+    "enhanced-switch",
+    "flow-control"
+  ],
+  "author": "Zefir Kirilov",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/zefir-git/EhancedSwitch/issues"
+  },
+  "homepage": "https://github.com/zefir-git/EhancedSwitch#readme",
+  "devDependencies": {
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.5.9",
+    "c8": "^8.0.1",
+    "mocha": "^10.2.0",
+    "typescript": "^5.2.2"
+  }
+}
