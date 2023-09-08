@@ -77,10 +77,10 @@ const result = new EnhancedSwitch(value)
 
 The EnhancedSwitch evaluates an expression, matching the expression's value against a series of `case` clauses, and executes the statements after the first `case` clause with a matching value. The `default` clause of an EnhancedSwitch will be jumped to if no case matches the expression's value.
 
-| Template parameters | Description            |
-|---------------------|------------------------|
-| `T`                 | Switch expression type |
-| `U`                 | Switch return type     |
+| Template parameter | Description            |
+|--------------------|------------------------|
+| `T`                | Switch expression type |
+| `U`                | Switch return type     |
 
 ### `new EnhancedSwitch(expression: T)`
 
