@@ -162,4 +162,4 @@ The result of the switch statement.
 |-----------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
 | [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError) | If the switch statement has no result, e.g. there is no `default` clause and no `case` clause matches the expression or returns a value. |
 
-Type: `U`
+Type: `U`. Read-only.
