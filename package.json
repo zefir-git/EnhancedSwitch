@@ -3,6 +3,7 @@
   "version": "0.0.0-dev",
   "description": "An enhanced switch, similar to Java",
   "main": "src/EnhancedSwitch.js",
+  "types": "src/EnhancedSwitch.d.ts",
   "type": "module",
   "scripts": {
     "test": "mocha",
