@@ -27,22 +27,35 @@
  * @template U Switch return type
  */
 export default class EnhancedSwitch<T, U> {
-    private result?: U;
+    /** @internal */
+    #result?: U;
+
+    /** @internal */
+    #hasBroken = false;
 
     /**
      * Create a new EnhancedSwitch
      *
      * @param expression - An expression whose result is matched against each `case` clause.
+     * @param allowFallthrough - Whether to allow fallthrough. If true, the switch will continue to execute `case` clauses after the first match until a `break` is encountered. Defaults to false.
      */
-    constructor(public readonly expression: T) {}
+    constructor(public readonly expression: T, public readonly allowFallthrough = false) {}
 
     /**
      * The result of the switch statement.
+     *
      * @throws {TypeError} If the switch statement has no result, e.g. there is no `default` clause and no `case` clause matches the expression or returns a value.
      */
     public get value(): U {
-        if (this.result === undefined) throw new TypeError("Switch has no result.");
-        return this.result;
+        if (this.#result === undefined) throw new TypeError("Switch has no result.");
+        return this.#result;
+    }
+
+    /**
+     * Whether the switch statement has concluded (no further `case` or `default` will be executed). A switch can be concluded by calling {@link #break} or constructing with `allowFallthrough` set to false.
+     */
+    public get hasConcluded(): boolean {
+        return this.#hasBroken;
     }
 
     /**
@@ -63,8 +76,13 @@ export default class EnhancedSwitch<T, U> {
 
     /** @internal */
     public case(a: T | [], b: U | ((s: EnhancedSwitch<T, U>) => U | void)): this {
-        const valueN = Array.isArray(a) ? a : [a];
-        if (valueN.includes(this.expression) && this.result === undefined) this.result = (typeof b === "function" ? (b as (s: EnhancedSwitch<T, U>) => U | void)(this) ?? this.result : b);
+        if (!this.hasConcluded) {
+            const valueN = Array.isArray(a) ? a : [a];
+            if (valueN.includes(this.expression)) {
+                this.#result = (typeof b === "function" ? (b as (s: EnhancedSwitch<T, U>) => U | void)(this) ?? this.#result : b);
+                if (!this.allowFallthrough) this.break();
+            }
+        }
         return this;
     }
 
@@ -100,7 +118,18 @@ export default class EnhancedSwitch<T, U> {
 
     /** @internal */
     public default(a: U | ((s: EnhancedSwitch<T, U>) => U | void), b?: true): this | U {
-        if (this.result === undefined) this.result = (typeof a === "function" ? (a as (s: EnhancedSwitch<T, U>) => U | void)(this) : a) ?? this.result;
-        return b ? this.result as U : this;
+        if (!this.hasConcluded) {
+            this.break();
+            this.#result = (typeof a === "function" ? (a as (s: EnhancedSwitch<T, U>) => U | void)(this) : a) ?? this.#result;
+        }
+        return b ? this.#result as U : this;
+    }
+
+    /**
+     * Prevent further execution of any subsequent `case` or `default` clauses.
+     */
+    public break(): this {
+        this.#hasBroken = true;
+        return this;
     }
 }

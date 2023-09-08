@@ -35,14 +35,14 @@ describe("EnhancedSwitch", () => {
     });
 
     it("should correctly handle case clause with function returning undefined", () => {
-        assert.strictEqual(
-            new EnhancedSwitch<number, string>(2)
-                .case(1, "One")
-                .case(2, () => undefined)
-                .default("Default")
-                .value,
-            "Default"
-        );
+        let a;
+        new EnhancedSwitch<number, string>(2)
+            .case(1, "One")
+            .case(2, () => {
+                a = 2;
+            })
+            .default("Default")
+        assert.strictEqual(a, 2);
     });
 
     it("should correctly handle case clause with an array of values", () => {
@@ -64,6 +64,31 @@ describe("EnhancedSwitch", () => {
                 .value,
             "Three from function with 3"
         );
+    });
+
+    it("should correctly handle fall-through cases without breaking", () => {
+        let i = 0;
+        new EnhancedSwitch(2, true)
+            .case(1, () => assert.fail())
+            .case(2, () => ++i)
+            .case(3, () => assert.fail())
+            .case(2, () => ++i)
+            .case(2, () => ++i)
+            .default(() => ++i);
+        assert.strictEqual(i, 4);
+    });
+
+    it("should correct conclude switch with fall-through cases when break is called", () => {
+        let i = 0;
+        new EnhancedSwitch(2, true)
+            .case(1, () => assert.fail())
+            .case(2, () => ++i)
+            .case(3, () => assert.fail())
+            .case(2, () => ++i)
+            .break()
+            .case(2, () => ++i)
+            .default(() => ++i);
+        assert.strictEqual(i, 2);
     });
 
     it("should correctly execute a default clause", () => {
@@ -118,6 +143,16 @@ describe("EnhancedSwitch", () => {
                 .default(() => undefined)
                 .value;
         }, TypeError, "Switch has no result.");
+    });
+
+    it("should return correct value when evaluating default when already concluded", () => {
+        assert.strictEqual(
+            new EnhancedSwitch<number, string>(2)
+                .case(1, "One")
+                .case(2, "Two")
+                .default("Default", true),
+            "Two"
+        );
     });
 
     it("should throw an error when no case matches and no default clause is provided", () => {

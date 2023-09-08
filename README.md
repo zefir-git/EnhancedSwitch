@@ -65,12 +65,16 @@ const result = new EnhancedSwitch(value)
 
 - [Class `EnhancedSwitch<T, U>`](#class-enhancedswitcht-u)
   - [`new EnhancedSwitch(expression: T)`](#new-enhancedswitchexpression-t)
+  - [`enhancedSwitch.allowFallthrough`](#enhancedswitchallowfallthrough)
+  - [`enhancedSwitch.break()`](#enhancedswitchbreak)
   - [`enhancedSwitch.case(valueN: T | T[], code: U)`](#enhancedswitchcasevaluen-t--t-code-u)
   - [`enhancedSwitch.case(valueN: T | T[], code: (s: EnhancedSwitch<T, U>) => U | void)`](#enhancedswitchcasevaluen-t--t-code-s-enhancedswitcht-u--u--void)
   - [`enhancedSwitch.default(code: U)`](#enhancedswitchdefaultcode-u)
   - [`enhancedSwitch.default(code: (s: EnhancedSwitch<T, U>) => U | void)`](#enhancedswitchdefaultcode-s-enhancedswitcht-u--u--void)
   - [`enhancedSwitch.default(code: U, returnvalueN: true)`](#enhancedswitchdefaultcode-u-returnvaluen-true)
   - [`enhancedSwitch.default(code: (s: EnhancedSwitch<T, U>) => U | void, returnvalueN: true)`](#enhancedswitchdefaultcode-s-enhancedswitcht-u--u--void-returnvaluen-true)
+  - [`enhancedSwitch.expression`](#enhancedswitchexpression)
+  - [`enhancedSwitch.hasConcluded`](#enhancedswitchhasconcluded)
   - [`enhancedSwitch.value`](#enhancedswitchvalue)
 
 ## Class `EnhancedSwitch<T, U>`
@@ -89,6 +93,18 @@ Create a new EnhancedSwitch
 | Parameter    | Type | Description                                                       |
 |--------------|------|-------------------------------------------------------------------|
 | `expression` | `T`  | An expression whose result is matched against each `case` clause. |
+
+### `enhancedSwitch.allowFallthrough`
+
+Whether to allow fallthrough. If true, the switch will continue to execute `case` clauses after the first match until a `break` is encountered. Defaults to false.
+
+Type: [`boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean). Read-only.
+
+### `enhancedSwitch.break()`
+
+Prevent further execution of any subsequent `case` or `default` clauses.
+
+Returns: `this` ([`EnhancedSwitch<T, U>`](#class-enhancedswitcht-u))
 
 ### `enhancedSwitch.case(valueN: T | T[], code: U)`
 
@@ -153,6 +169,18 @@ A `default` clause; if provided, this clause is executed if the value of `expres
 | `returnvalueN` | `true`                                   | If true, the provided value is returned instead of the switch instance. |
 
 Returns: `U`
+
+### `enhancedSwitch.expression`
+
+An expression whose result is matched against each `case` clause.
+
+Type: `T`. Read-only.
+
+### `enhancedSwitch.hasConcluded`
+
+Whether the switch statement has concluded (no further `case` or `default` will be executed). A switch can be concluded by calling [`enhancedSwitch.break()`](#enhancedswitchbreak) or constructing with `allowFallthrough` set to false.
+
+Type: [`boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean). Read-only.
 
 ### `enhancedSwitch.value`
 
