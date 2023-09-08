@@ -1,0 +1,10 @@
+# Whitelist mode
+*
+
+# Patterns to include in package
+!src/**/*.js
+!src/**/*.d.ts
+!LICENSE
+!package.json
+!package-lock.json
+!README.md
