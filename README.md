@@ -7,7 +7,7 @@
 
 An enhanced switch, similar to Java.
 
-This library targets Node.js 16, 18 and 20, but can also work in the browser.
+This library targets Node.js 22, 24 and 26, but can also work in the browser.
 
 ## Installation
 ```sh
@@ -60,7 +60,7 @@ const result = new EnhancedSwitch(value)
 
 ## Licence
 
-Copyright © 2023–2025 Zefir Kirilov.
+Copyright © 2023–2026 Zefir Kirilov.
 
 This project is licensed under the GNU Lesser General Public License v3.0 (LGPL-3.0). A copy of the licence text is included in this repository. If not, see https://www.gnu.org/licenses/.
 
